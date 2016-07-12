@@ -1,10 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html id="ng-app" ng-app='myApp'>
     <head>
         <meta charset="utf-8">
         <title>demo2</title>
+
+        <!--[if lte IE 8]>
+			<script>
+				document.createElement('ng-include');
+				document.createElement('ng-pluralize');
+				document.createElement('ng-view');
+
+				// Optionally these for CSS
+				document.createElement('ng:include');
+				document.createElement('ng:pluralize');
+				document.createElement('ng:view');
+
+				// Sexy custom tags
+				document.createElement('my-directive');
+			</script>
+        <![endif]-->
     </head>
     <body>
-        
+
+        <div ng-controller="myController">
+            <div my-directive info='naomi'></div>
+            <div my-directive info='igor'></div>
+            <!-- IE8不支持自定义节点 -->
+            <my-directive info='naomi'></my-directive>
+            <my-directive info='igor'></my-directive>
+        </div>
+
+        <div ng-controller="SevController">
+            <h1>{{ fiveDay.city_name }}</h1>
+            <h2>5-day forecast</h2>
+            <div ng-repeat="day in fiveDay.days">
+				datetime:{{ day.datetime | date }}high:{{ day.high }}low:{{ day.low }}
+            </div>
+        </div>
+
+        <div id="simple" ng-controller="NotifyController">
+            <p>Let's try this simple notify service, injected into the controller...</p>
+            <input ng-init="message='test'" ng-model="message" >
+            <button ng-click="callNotify(message);">NOTIFY</button>
+            <p>(you have to click 3 times to see an alert)</p>
+        </div>
+
+        <!--[if lt IE 9]>
+            <script src="../share/es5-shim.min.js" charset="utf-8"></script>
+            <script src="../share/html5shiv.min.js" charset="utf-8"></script>
+        <![endif]-->
+        <script src="../angular-1.2.29/angular.min.js" charset="utf-8"></script>
+        <script src="./js/app.js" charset="utf-8"></script>
+        <script src="./js/servers/forecast.js" charset="utf-8"></script>
+        <script src="./js/servers/notify.js" charset="utf-8"></script>
+        <script src="./js/directives/myDirective.js" charset="utf-8"></script>
+        <script src="./js/controllers/myController.js" charset="utf-8"></script>
+        <script src="./js/controllers/SevController.js" charset="utf-8"></script>
+        <script src="./js/controllers/NotifyController.js" charset="utf-8"></script>
     </body>
 </html>
